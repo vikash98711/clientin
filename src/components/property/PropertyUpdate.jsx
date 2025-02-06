@@ -126,6 +126,7 @@ function PropertyUpdate() {
             icon: "success",
             confirmButtonText: "OK",
           });
+          window.location.reload();
         } else if (data.message === "No fields to update") {
           Swal.fire({
             icon: "warning",

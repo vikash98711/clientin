@@ -91,6 +91,7 @@ const NewProject = () => {
         setPropertyImageTwo(null);
         setPropertyImageThree(null);
         setPropertyImageFour(null);
+        window.location.reload();
       } else {
         // Show error alert
         Swal.fire({
