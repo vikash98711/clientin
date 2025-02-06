@@ -15,16 +15,25 @@ function PropertyUpdate() {
   const [status, setStatus] = useState("Pending");
   const [price, setPrice] = useState("");
   const [propertyName, setPropertyName] = useState("");
-  const [propertyImage, setPropertyImage] = useState(null);
-  console.log(propertyImage);
-
+  const [thumbnail, setThumbnail] = useState(null);
   const [descriptionImage, setDescriptionImage] = useState(null);
+  const [propertyImageOne, setPropertyImageOne] = useState(null);
+  const [propertyImageTwo, setPropertyImageTwo] = useState(null);
+  const [propertyImageThree, setPropertyImageThree] = useState(null);
+  const [propertyImageFour, setPropertyImageFour] = useState(null);
+
   const [description, setDescription] = useState("");
 
-  const [editPropertyImage, setEditPropertyImage] = useState(false);
-  const [previewPropertyImage, setPreviewPropertyImage] = useState("");
+  const [editThumbnail, setEditThumbnail] = useState(false);
   const [editDescriptionImage, setEditDescriptionImage] = useState(false);
-  const [previewDescriptionImage, setPreviewDescriptionImage] = useState("");
+  const [editImage, setEditImage] = useState({
+    one: false,
+    two: false,
+    three: false,
+    four: false,
+  });
+
+  const [property, setProperty] = useState({});
 
   const [loading, setLoading] = useState(false);
   const [loadingButton, setLoadingButton] = useState(false);
@@ -44,9 +53,8 @@ function PropertyUpdate() {
         setStatus(data.status);
         setPrice(data.price);
         setPropertyName(data.projectName);
-        setPreviewPropertyImage(data.propertyImage);
-        setPreviewDescriptionImage(data.descriptionImage);
         setDescription(data.description);
+        setProperty(data);
       })
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
@@ -66,19 +74,6 @@ function PropertyUpdate() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(
-      sellerName,
-      city,
-      category,
-      type,
-      status,
-      price,
-      propertyName,
-      propertyImage,
-      descriptionImage,
-      description
-    );
-
     const formData = new FormData();
     formData.append("sellerName", sellerName);
     formData.append("city", city);
@@ -87,13 +82,25 @@ function PropertyUpdate() {
     formData.append("status", status);
     formData.append("price", price);
     formData.append("projectName", propertyName);
-    if (propertyImage) {
-      formData.append("propertyImage", propertyImage);
+    formData.append("description", description);
+    if (thumbnail) {
+      formData.append("thumbnail", thumbnail);
     }
     if (descriptionImage) {
       formData.append("descriptionImage", descriptionImage);
     }
-    formData.append("description", description);
+    if (propertyImageOne) {
+      formData.append("propertyImageOne", propertyImageOne);
+    }
+    if (propertyImageTwo) {
+      formData.append("propertyImageTwo", propertyImageTwo);
+    }
+    if (propertyImageThree) {
+      formData.append("propertyImageThree", propertyImageThree);
+    }
+    if (propertyImageFour) {
+      formData.append("propertyImageFour", propertyImageFour);
+    }
 
     setLoadingButton(true);
 
@@ -105,8 +112,14 @@ function PropertyUpdate() {
       .then((data) => {
         if (data.message === "Project updated successful") {
           getProject(data.projectId);
-          setEditPropertyImage(false);
+          setThumbnail(false);
           setEditDescriptionImage(false);
+          setEditImage({
+            one: false,
+            two: false,
+            three: false,
+            four: false,
+          });
           Swal.fire({
             title: "Success!",
             text: "Project updated successfully!",
@@ -190,23 +203,23 @@ function PropertyUpdate() {
               </div>
 
               <div className="col-md-4">
-                <label htmlFor="propertyImage" className="form-label">
-                  Property Image
+                <label htmlFor="thumbnail" className="form-label">
+                  Thumbnail
                 </label>
-                {editPropertyImage ? (
+                {editThumbnail ? (
                   <div className="d-flex flex-column">
                     <input
                       type="file"
                       className="form-control mb-2"
-                      id="propertyImage"
+                      id="thumbnail"
                       accept="image/*"
-                      onChange={(e) => handleImageChange(e, setPropertyImage)}
+                      onChange={(e) => handleImageChange(e, setThumbnail)}
                     />
                     <button
                       className="btn btn-primary"
                       onClick={(e) => {
                         e.preventDefault();
-                        setEditPropertyImage(false);
+                        setEditThumbnail(false);
                       }}
                     >
                       <i className="fa-solid fa-x"></i>
@@ -215,7 +228,7 @@ function PropertyUpdate() {
                 ) : (
                   <div className="d-flex flex-column">
                     <img
-                      src={previewPropertyImage}
+                      src={property.thumbnail ? property.thumbnail : ""}
                       alt=""
                       className="d-inline-block rounded mb-2"
                       style={{
@@ -227,7 +240,7 @@ function PropertyUpdate() {
                       className="btn btn-primary"
                       onClick={(e) => {
                         e.preventDefault();
-                        setEditPropertyImage(true);
+                        setEditThumbnail(true);
                       }}
                     >
                       <i className="fa-solid fa-pencil"></i>
@@ -265,7 +278,11 @@ function PropertyUpdate() {
                 ) : (
                   <div className="d-flex flex-column">
                     <img
-                      src={previewDescriptionImage}
+                      src={
+                        property.descriptionImage
+                          ? property.descriptionImage
+                          : ""
+                      }
                       alt=""
                       className="d-inline-block rounded mb-2"
                       style={{
@@ -355,6 +372,214 @@ function PropertyUpdate() {
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                 />
+              </div>
+              <div className="col-md-3">
+                <label htmlFor="propertyImageOne" className="form-label">
+                  Property Image 1
+                </label>
+                {editImage.one ? (
+                  <div className="d-flex flex-column">
+                    <input
+                      type="file"
+                      className="form-control"
+                      id="propertyImageOne"
+                      accept="image/*"
+                      onChange={(e) =>
+                        handleImageChange(e, setPropertyImageOne)
+                      }
+                    />
+                    <button
+                      className="btn btn-primary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setEditImage({ ...editImage, one: false });
+                      }}
+                    >
+                      <i className="fa-solid fa-x"></i>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="d-flex flex-column">
+                    <img
+                      src={
+                        property.propertyImageOne
+                          ? property.propertyImageOne
+                          : ""
+                      }
+                      alt=""
+                      className="d-inline-block rounded mb-2"
+                      style={{
+                        height: "150px",
+                        objectFit: "cover",
+                      }}
+                    />
+                    <button
+                      className="btn btn-primary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setEditImage({ ...editImage, one: true });
+                      }}
+                    >
+                      <i className="fa-solid fa-pencil"></i>
+                    </button>
+                  </div>
+                )}
+              </div>
+              <div className="col-md-3">
+                <label htmlFor="propertyImageTwo" className="form-label">
+                  Property Image 2
+                </label>
+                {editImage.two ? (
+                  <div className="d-flex flex-column">
+                    <input
+                      type="file"
+                      className="form-control"
+                      id="propertyImageTwo"
+                      accept="image/*"
+                      onChange={(e) =>
+                        handleImageChange(e, setPropertyImageTwo)
+                      }
+                    />
+                    <button
+                      className="btn btn-primary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setEditImage({ ...editImage, two: false });
+                      }}
+                    >
+                      <i className="fa-solid fa-x"></i>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="d-flex flex-column ">
+                    <img
+                      src={
+                        property.propertyImageTwo
+                          ? property.propertyImageTwo
+                          : ""
+                      }
+                      alt=""
+                      className="d-inline-block rounded mb-2"
+                      style={{
+                        height: "150px",
+                        objectFit: "cover",
+                      }}
+                    />
+                    <button
+                      className="btn btn-primary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setEditImage({ ...editImage, two: true });
+                      }}
+                    >
+                      <i className="fa-solid fa-pencil"></i>
+                    </button>
+                  </div>
+                )}
+              </div>
+              <div className="col-md-3">
+                <label htmlFor="propertyImageThree" className="form-label">
+                  Property Image 3
+                </label>
+                {editImage.three ? (
+                  <div className="d-flex flex-column ">
+                    <input
+                      type="file"
+                      className="form-control"
+                      id="propertyImageThree"
+                      accept="image/*"
+                      onChange={(e) =>
+                        handleImageChange(e, setPropertyImageThree)
+                      }
+                    />
+                    <button
+                      className="btn btn-primary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setEditImage({ ...editImage, three: false });
+                      }}
+                    >
+                      <i className="fa-solid fa-x"></i>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="d-flex flex-column ">
+                    <img
+                      src={
+                        property.propertyImageThree
+                          ? property.propertyImageThree
+                          : ""
+                      }
+                      alt=""
+                      className="d-inline-block rounded mb-2"
+                      style={{
+                        height: "150px",
+                        objectFit: "cover",
+                      }}
+                    />
+                    <button
+                      className="btn btn-primary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setEditImage({ ...editImage, three: true });
+                      }}
+                    >
+                      <i className="fa-solid fa-pencil"></i>
+                    </button>
+                  </div>
+                )}
+              </div>
+              <div className="col-md-3">
+                <label htmlFor="propertyImageFour" className="form-label">
+                  Property Image 4
+                </label>
+                {editImage.four ? (
+                  <div className="d-flex flex-column gap-2">
+                    <input
+                      type="file"
+                      className="form-control"
+                      id="propertyImageFour"
+                      accept="image/*"
+                      onChange={(e) =>
+                        handleImageChange(e, setPropertyImageFour)
+                      }
+                    />
+                    <button
+                      className="btn btn-primary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setEditImage({ ...editImage, four: false });
+                      }}
+                    >
+                      <i className="fa-solid fa-x"></i>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="d-flex flex-column">
+                    <img
+                      src={
+                        property.propertyImageFour
+                          ? property.propertyImageFour
+                          : ""
+                      }
+                      alt=""
+                      className="d-inline-block rounded mb-2"
+                      style={{
+                        height: "150px",
+                        objectFit: "cover",
+                      }}
+                    />
+                    <button
+                      className="btn btn-primary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setEditImage({ ...editImage, one: true });
+                      }}
+                    >
+                      <i className="fa-solid fa-pencil"></i>
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="col-md-12">

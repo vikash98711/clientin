@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import Form from "react-bootstrap/Form";
@@ -6,11 +6,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-function TextEditor({ value, onChange }) {
+function TextEditor({ value, onChange, minHeight = 200, maxHeight = 500 }) {
   const [quillEditor, setQuillEditor] = useState(null);
   const [activeFormats, setActiveFormats] = useState({});
   const [show, setShow] = useState(false);
   const [modalContent, setModalContent] = useState("");
+  const editorRef = useRef(null);
+  const containerRef = useRef(null);
 
   const handleClose = () => setShow(false);
   const handleShow = (e) => {
@@ -21,6 +23,33 @@ function TextEditor({ value, onChange }) {
     setShow(true);
   };
 
+  const autoResize = () => {
+    if (!quillEditor || !containerRef.current) return;
+
+    const editorContent = quillEditor.root;
+    const scrollHeight = editorContent.scrollHeight;
+    const currentHeight = containerRef.current.clientHeight;
+
+    // Adjust height within min and max constraints
+    if (scrollHeight > currentHeight && scrollHeight <= maxHeight) {
+      containerRef.current.style.height = `${scrollHeight}px`;
+    } else if (scrollHeight > maxHeight) {
+      containerRef.current.style.height = `${maxHeight}px`;
+      containerRef.current.style.overflowY = "auto";
+    } else if (scrollHeight < minHeight) {
+      containerRef.current.style.height = `${minHeight}px`;
+    }
+  };
+
+  useEffect(() => {
+    if (quillEditor) {
+      quillEditor.on("text-change", autoResize);
+      return () => {
+        quillEditor.off("text-change", autoResize);
+      };
+    }
+  }, [quillEditor]);
+
   useEffect(() => {
     if (quillEditor && value !== quillEditor.root.innerHTML) {
       const selection = quillEditor.getSelection();
@@ -28,6 +57,7 @@ function TextEditor({ value, onChange }) {
       if (selection) {
         quillEditor.setSelection(selection);
       }
+      autoResize();
     }
   }, [value, quillEditor]);
 
@@ -58,6 +88,7 @@ function TextEditor({ value, onChange }) {
       });
 
       setQuillEditor(editor);
+      editorRef.current = ref;
     }
   };
 
@@ -202,10 +233,16 @@ function TextEditor({ value, onChange }) {
 
       {/* Quill Editor */}
       <div
-        ref={initializeQuill}
+        ref={containerRef}
         className="border p-2"
-        style={{ height: "200px" }}
-      />
+        style={{
+          minHeight: `${minHeight}px`,
+          maxHeight: `${maxHeight}px`,
+          overflowY: "auto",
+        }}
+      >
+        <div ref={initializeQuill} className="editor-content" />
+      </div>
     </div>
   );
 }

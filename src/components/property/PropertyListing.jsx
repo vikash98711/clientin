@@ -388,7 +388,7 @@ const PropertyListing = () => {
                 <td>{project.projectName}</td>
                 <td>
                   <img
-                    src={project.propertyImage}
+                    src={project.thumbnail}
                     alt={project.projectName}
                     className="img-rounded"
                     style={{

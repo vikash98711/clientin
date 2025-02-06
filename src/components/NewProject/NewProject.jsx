@@ -15,9 +15,13 @@ const NewProject = () => {
   const [status, setStatus] = useState("Pending");
   const [price, setPrice] = useState("");
   const [propertyName, setPropertyName] = useState("");
-  const [propertyImage, setPropertyImage] = useState(null);
+  const [thumbnail, setThumbnail] = useState(null);
   const [descriptionImage, setDescriptionImage] = useState(null);
   const [description, setDescription] = useState("");
+  const [propertyImageOne, setPropertyImageOne] = useState(null);
+  const [propertyImageTwo, setPropertyImageTwo] = useState(null);
+  const [propertyImageThree, setPropertyImageThree] = useState(null);
+  const [propertyImageFour, setPropertyImageFour] = useState(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -41,10 +45,14 @@ const NewProject = () => {
     formData.append("status", status);
     formData.append("price", price);
     formData.append("projectName", propertyName);
-    formData.append("propertyImage", propertyImage);
+    formData.append("thumbnail", thumbnail);
     formData.append("descriptionImage", descriptionImage);
     formData.append("description", description);
     formData.append("role", "admin");
+    formData.append("propertyImageOne", propertyImageOne);
+    formData.append("propertyImageTwo", propertyImageTwo);
+    formData.append("propertyImageThree", propertyImageThree);
+    formData.append("propertyImageFour", propertyImageFour);
 
     setLoading(true);
     try {
@@ -54,6 +62,9 @@ const NewProject = () => {
       });
 
       const data = await response.json();
+      console.log(response.status);
+      console.log(data.message);
+
       if (
         response.status === 201 &&
         data.message === "Project uploaded successfully"
@@ -73,9 +84,13 @@ const NewProject = () => {
         setStatus("Pending");
         setPrice("");
         setPropertyName("");
-        setPropertyImage(null);
+        setThumbnail(null);
         setDescriptionImage(null);
         setDescription("");
+        setPropertyImageOne(null);
+        setPropertyImageTwo(null);
+        setPropertyImageThree(null);
+        setPropertyImageFour(null);
       } else {
         // Show error alert
         Swal.fire({
@@ -94,7 +109,6 @@ const NewProject = () => {
       });
     } finally {
       setLoading(false);
-      window.location.reload()
     }
   };
 
@@ -147,14 +161,14 @@ const NewProject = () => {
 
           <div className="col-md-4">
             <label htmlFor="propertyImage" className="form-label">
-              Property Image
+              Thumbnail
             </label>
             <input
               type="file"
               className="form-control"
               id="propertyImage"
               accept="image/*"
-              onChange={(e) => handleImageChange(e, setPropertyImage)}
+              onChange={(e) => handleImageChange(e, setThumbnail)}
               required
             />
           </div>
@@ -244,6 +258,58 @@ const NewProject = () => {
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               required
+            />
+          </div>
+
+          <div className="col-md-3">
+            <label htmlFor="propertyImageOne" className="form-label">
+              Property Image 1
+            </label>
+            <input
+              type="file"
+              className="form-control"
+              id="propertyImageOne"
+              accept="image/*"
+              onChange={(e) => handleImageChange(e, setPropertyImageOne)}
+            />
+          </div>
+
+          <div className="col-md-3">
+            <label htmlFor="propertyImageTwo" className="form-label">
+              Property Image 2
+            </label>
+            <input
+              type="file"
+              className="form-control"
+              id="propertyImageTwo"
+              accept="image/*"
+              onChange={(e) => handleImageChange(e, setPropertyImageTwo)}
+            />
+          </div>
+
+          <div className="col-md-3">
+            <label htmlFor="propertyImageThree" className="form-label">
+              Property Image 3
+            </label>
+            <input
+              type="file"
+              className="form-control"
+              id="propertyImageThree"
+              accept="image/*"
+              onChange={(e) => handleImageChange(e, setPropertyImageThree)}
+            />
+          </div>
+
+          <div className="col-md-3">
+            <label htmlFor="propertyImageFour" className="form-label">
+              Property Image 4
+            </label>
+            <input
+              type="file"
+              className="form-control"
+              id="propertyImageFour"
+              accept="image/*"
+              onChange={(e) => handleImageChange(e, setPropertyImageFour)}
             />
           </div>
 

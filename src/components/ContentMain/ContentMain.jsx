@@ -391,7 +391,7 @@ const ContentMain = () => {
                     <i className="fas fa-clock fs-3" style={iconStyle}></i>
                   </div>
                 </Card.Title>
-                <Card.Title className="fs-6" style={cardTitleStyle}>Categories (5)</Card.Title>
+                <Card.Title className="fs-6" style={cardTitleStyle}>Pending Properties (5)</Card.Title>
               </Card.Body>
             </Card>
           </div>
@@ -405,7 +405,7 @@ const ContentMain = () => {
                     <i className="fas fa-check-circle fs-3" style={iconStyle}></i>
                   </div>
                 </Card.Title>
-                <Card.Title className="fs-6" style={cardTitleStyle}>Total Type (10)</Card.Title>
+                <Card.Title className="fs-6" style={cardTitleStyle}>Approved Properties (10)</Card.Title>
               </Card.Body>
             </Card>
           </div>
