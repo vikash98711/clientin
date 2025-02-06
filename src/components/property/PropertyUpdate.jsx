@@ -217,7 +217,7 @@ function PropertyUpdate() {
                       onChange={(e) => handleImageChange(e, setThumbnail)}
                     />
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary secondary-blue"
                       onClick={(e) => {
                         e.preventDefault();
                         setEditThumbnail(false);
@@ -238,7 +238,7 @@ function PropertyUpdate() {
                       }}
                     />
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary secondary-blue"
                       onClick={(e) => {
                         e.preventDefault();
                         setEditThumbnail(true);
@@ -267,7 +267,7 @@ function PropertyUpdate() {
                       }
                     />
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary secondary-blue"
                       onClick={(e) => {
                         e.preventDefault();
                         setEditDescriptionImage(false);
@@ -292,7 +292,7 @@ function PropertyUpdate() {
                       }}
                     />
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary secondary-blue"
                       onClick={(e) => {
                         e.preventDefault();
                         setEditDescriptionImage(true);
@@ -390,7 +390,7 @@ function PropertyUpdate() {
                       }
                     />
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary secondary-blue"
                       onClick={(e) => {
                         e.preventDefault();
                         setEditImage({ ...editImage, one: false });
@@ -415,7 +415,7 @@ function PropertyUpdate() {
                       }}
                     />
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary secondary-blue"
                       onClick={(e) => {
                         e.preventDefault();
                         setEditImage({ ...editImage, one: true });
@@ -442,7 +442,7 @@ function PropertyUpdate() {
                       }
                     />
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary secondary-blue"
                       onClick={(e) => {
                         e.preventDefault();
                         setEditImage({ ...editImage, two: false });
@@ -467,7 +467,7 @@ function PropertyUpdate() {
                       }}
                     />
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary secondary-blue"
                       onClick={(e) => {
                         e.preventDefault();
                         setEditImage({ ...editImage, two: true });
@@ -494,7 +494,7 @@ function PropertyUpdate() {
                       }
                     />
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary secondary-blue"
                       onClick={(e) => {
                         e.preventDefault();
                         setEditImage({ ...editImage, three: false });
@@ -519,7 +519,7 @@ function PropertyUpdate() {
                       }}
                     />
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary secondary-blue"
                       onClick={(e) => {
                         e.preventDefault();
                         setEditImage({ ...editImage, three: true });
@@ -546,7 +546,7 @@ function PropertyUpdate() {
                       }
                     />
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary secondary-blue"
                       onClick={(e) => {
                         e.preventDefault();
                         setEditImage({ ...editImage, four: false });
@@ -571,7 +571,7 @@ function PropertyUpdate() {
                       }}
                     />
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary secondary-blue"
                       onClick={(e) => {
                         e.preventDefault();
                         setEditImage({ ...editImage, one: true });
@@ -594,7 +594,7 @@ function PropertyUpdate() {
             <div className="text-end mt-4">
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="btn btn-primary secondary-blue"
                 disabled={loadingButton}
               >
                 {loadingButton ? "Uploading" : "Submit"}

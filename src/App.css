@@ -59,7 +59,7 @@ button {
   border: 1px solid var(--lightred) !important;
 }
 
-button.btn.btn-primary{
+.secondary-blue{
     background-color: #295879 !important;
 
 }
