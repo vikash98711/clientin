@@ -58,6 +58,11 @@ button {
   background-color: var(--lightred) !important;
   border: 1px solid var(--lightred) !important;
 }
+
+button.btn.btn-primary{
+    background-color: #295879 !important;
+
+}
 .img-fit-cover img {
   width: 100%;
   height: 100%;
