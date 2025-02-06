@@ -250,7 +250,7 @@ const initialPropertyData = [
 const PropertyListing = () => {
   const [activeTab, setActiveTab] = useState("/all");
   const [currentPage, setCurrentPage] = useState(1);
-  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState("");
 
   const { setProjects, projects } = useContext(SidebarContext);
 
@@ -301,10 +301,10 @@ const PropertyListing = () => {
 
   const deleteProject = async (id) => {
     try {
-      setDeleteLoading(true);
+      setDeleteLoading(id);
       const res = await axios.delete(`${url}/api/project/delete/${id}`);
       if (res.status === 200) {
-        setDeleteLoading(false);
+        setDeleteLoading("");
         await axios.get(`${url}/api/project/get/all`).then((res) => {
           setProjects(res.data);
         });
@@ -316,7 +316,7 @@ const PropertyListing = () => {
       }
     } catch (error) {
       console.log(error);
-      setDeleteLoading(false);
+      setDeleteLoading("");
       Swal.fire({
         icon: "error",
         title:
@@ -325,7 +325,7 @@ const PropertyListing = () => {
         timer: 1500,
       });
     } finally {
-      setDeleteLoading(false);
+      setDeleteLoading("");
     }
   };
 
@@ -435,7 +435,7 @@ const PropertyListing = () => {
                 </td>
                 <td>
                   <Link onClick={(e) => handleDelete(e, project._id)}>
-                    {deleteLoading ? (
+                    {deleteLoading  === project._id ? (
                       <span
                         className="ms-2 spinner-border spinner-border-sm"
                         role="status"
