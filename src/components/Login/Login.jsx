@@ -70,7 +70,7 @@ const Login = () => {
             className="avatar"
           /> */}
           <div className='text-center'>
-                      <img src="public/FINAL-LOGO-1INFRA.png" style={{width:'250px', height:'100px'}}/>
+                      <img src="FINAL-LOGO-1INFRA.png" style={{width:'250px', height:'100px'}}/>
                       </div>
 
           <h1 className='text-black'>Login Here</h1>

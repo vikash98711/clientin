@@ -35,7 +35,7 @@ const Sidebar = () => {
       </div>
       <div className="user-info">
         <div className="info-img img-fit-cover">
-          <img src='/public/WHITEInfra.png'/>
+          <img src='/WHITEInfra.png'/>
         </div>
       </div>
 
